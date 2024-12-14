@@ -9,6 +9,9 @@ final class FadeAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransit
         imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0
+        imageView.bounds.size.width = 100
+        imageView.bounds.size.height = 150
+        
         return imageView
     }()
     
