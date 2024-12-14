@@ -8,7 +8,7 @@ final class FadeAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransit
         imageView.image = UIImage(named: "photo")
         imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.alpha = 0.0
+        imageView.alpha = 0
         return imageView
     }()
     
@@ -27,12 +27,12 @@ final class FadeAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransit
     private func present(using transitionContext: UIViewControllerContextTransitioning) {
         guard let toView = transitionContext.view(forKey: .to) else { return }
         let containerView = transitionContext.containerView
-        
         toView.addSubview(imageView)
         containerView.addSubview(toView)
-            
-
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+            UIView.animate(withDuration: 0.5) {
+                self.imageView.alpha = 1.0
+            }
             self.imageView.alpha = 0.0
         }, completion: { _ in
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
@@ -41,7 +41,6 @@ final class FadeAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransit
 
     private func dismiss(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromView = transitionContext.view(forKey: .from) else { return }
-
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
 //            fromView.backgroundColor = .black
             self.imageView.alpha = 1.0
