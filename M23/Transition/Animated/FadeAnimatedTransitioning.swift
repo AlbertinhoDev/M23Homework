@@ -9,9 +9,6 @@ final class FadeAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransit
         imageView.contentMode = .scaleToFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0
-        imageView.bounds.size.width = 100
-        imageView.bounds.size.height = 150
-        
         return imageView
     }()
     
@@ -31,6 +28,18 @@ final class FadeAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransit
         guard let toView = transitionContext.view(forKey: .to) else { return }
         let containerView = transitionContext.containerView
         toView.addSubview(imageView)
+        
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: 300),
+            imageView.heightAnchor.constraint(equalToConstant: 300),
+            imageView.centerXAnchor.constraint(equalTo: toView.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: toView.centerYAnchor)
+        ])
+        
+        UIView.animate(withDuration: 1.0) {
+            self.imageView.alpha = 1 // Увеличиваем прозрачность до 1
+        }
+        
         containerView.addSubview(toView)
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
             UIView.animate(withDuration: 0.5) {
